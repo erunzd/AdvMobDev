@@ -1,75 +1,165 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+export default function SpotifyLoginScreen() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View style={styles.container}>
+      {/* Spotify Logo */}
+      <Image
+        source={{
+          uri: "https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png",
+        }}
+        style={styles.logo}
+      />
+      <Text style={styles.title}>Spotify</Text>
+
+      {/* Username Input */}
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        placeholderTextColor="#aaa"
+        value={username}
+        onChangeText={setUsername}
+      />
+
+      {/* Password Input */}
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        placeholderTextColor="#aaa"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
+
+      {/* Forgot Password */}
+      <TouchableOpacity style={styles.forgotPassword}>
+        <Text style={styles.forgotPasswordText}>Forgot password?</Text>
+      </TouchableOpacity>
+
+      {/* Sign In Button */}
+      <TouchableOpacity style={styles.signInButton}>
+        <Text style={styles.signInText}>Sign In</Text>
+      </TouchableOpacity>
+
+      {/* Divider */}
+      <Text style={styles.orText}>Be Correct With</Text>
+
+      {/* Social Buttons */}
+      <View style={styles.socialRow}>
+        <TouchableOpacity style={styles.socialButton}>
+          <Text style={styles.socialText}>f</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.socialButton}>
+          <Text style={styles.socialText}>G</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Sign Up Link */}
+      <View style={styles.signUpRow}>
+        <Text style={styles.signUpText}>Don’t have an account? </Text>
+        <TouchableOpacity>
+          <Text style={styles.signUpLink}>Sign Up</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
+    backgroundColor: "#121212",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 20,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  logo: {
+    width: 90,
+    height: 90,
+    marginBottom: 10,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  title: {
+    fontSize: 28,
+    color: "#fff",
+    fontWeight: "bold",
+    marginBottom: 40,
+  },
+  input: {
+    width: "100%",
+    backgroundColor: "#1e1e1e",
+    borderRadius: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    color: "#fff",
+    fontSize: 16,
+    marginBottom: 14,
+  },
+  forgotPassword: {
+    alignSelf: "flex-end",
+    marginBottom: 20,
+  },
+  forgotPasswordText: {
+    color: "#aaa",
+    fontSize: 12,
+  },
+  signInButton: {
+    backgroundColor: "#1DB954",
+    borderRadius: 25,
+    paddingVertical: 14,
+    paddingHorizontal: 60,
+    marginBottom: 20,
+  },
+  signInText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+  orText: {
+    color: "#aaa",
+    fontSize: 12,
+    marginBottom: 10,
+  },
+  socialRow: {
+    flexDirection: "row",
+    gap: 20,
+    marginBottom: 30,
+  },
+  socialButton: {
+    backgroundColor: "#1e1e1e",
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  socialText: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  signUpRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  signUpText: {
+    color: "#aaa",
+    fontSize: 13,
+  },
+  signUpLink: {
+    color: "#1DB954",
+    fontSize: 13,
+    fontWeight: "600",
   },
 });
