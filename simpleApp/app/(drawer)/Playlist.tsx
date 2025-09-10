@@ -5,27 +5,27 @@ import { Ionicons } from "@expo/vector-icons";
 const playlists = [
   {
     id: "1",
-    title: "FOUR",
+    title: "9INE/NONE",
     image:
       "https://static.wikia.nocookie.net/twicenation/images/4/4d/THIS_IS_FOR_-_Digital_Cover.jpg/revision/latest/scale-to-width-down/1000?cb=20250520162612",
   },
   {
     id: "2",
-    title: "AVOCADO",
+    title: "OSCS",
     image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPmwerVyZ2w0zj6a33kIptvTW7H6b0rEp3TuTFqWf2WQ&s&ec=73068120",
+      "https://i.pinimg.com/736x/7c/49/07/7c4907757f675f5a9af7f73efb1aba60.jpg",
   },
   {
     id: "3",
-    title: "GO",
+    title: "CRASH",
     image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGgVnvMpMpaLtED4BjRDqVfYVzOTW_M4VR-g&s",
+      "https://i.pinimg.com/736x/ea/5f/65/ea5f65226903ddf52f54bdf6814d3fba.jpg",
   },
   {
     id: "4",
-    title: "SUPER",
+    title: "MIXnMATCH",
     image:
-      "https://i1.sndcdn.com/artworks-cxEb5z7z5WepDt88-Accr7w-t500x500.jpg",
+      "https://i.pinimg.com/736x/a4/75/de/a475de8ae14e15170d2a7e37557fae13.jpg",
   },
 ];
 
