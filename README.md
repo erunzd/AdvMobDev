@@ -7,18 +7,23 @@ It is a prototype mobile application built with **React Native** and **Expo Rout
 
 ## 📱 Screenshots  
 
-- Login Screen/SignUp
-<img width="1080" height="2400" alt="Login" src="https://github.com/user-attachments/assets/f7fa34b3-fdc7-46e6-986f-d6ce3c146c01" />
-<img width="1080" height="2400" alt="SignUp" src="https://github.com/user-attachments/assets/ba48cc8d-c0ec-429d-af83-a12f3cd4c32c" />
+### 🔑 Login / Sign Up  
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f7fa34b3-fdc7-46e6-986f-d6ce3c146c01" alt="Login" width="250" />
+  <img src="https://github.com/user-attachments/assets/ba48cc8d-c0ec-429d-af83-a12f3cd4c32c" alt="SignUp" width="250" />
+</p>
 
-- Content Screens  
-<img width="1080" height="2400" alt="Profile" src="https://github.com/user-attachments/assets/a409dc52-c2e8-41a5-b1a2-1f1e35d4dfb7" />
-<img width="1080" height="2400" alt="Settings" src="https://github.com/user-attachments/assets/7347f7da-98d5-4f2a-8137-3fe006e3ed3e" />
-<img width="1080" height="2400" alt="Playlist" src="https://github.com/user-attachments/assets/668988a9-0a9e-4ddc-9756-77bb05a587de" />
+### 📂 Content Screens  
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a409dc52-c2e8-41a5-b1a2-1f1e35d4dfb7" alt="Profile" width="250" />
+  <img src="https://github.com/user-attachments/assets/7347f7da-98d5-4f2a-8137-3fe006e3ed3e" alt="Settings" width="250" />
+  <img src="https://github.com/user-attachments/assets/668988a9-0a9e-4ddc-9756-77bb05a587de" alt="Playlist" width="250" />
+</p>
 
-- Drawer
-<img width="1080" height="2400" alt="DrawerV1" src="https://github.com/user-attachments/assets/67fcd084-6eb5-4da9-b3ee-cc588bf56677" />
-
+### 📑 Drawer  
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/67fcd084-6eb5-4da9-b3ee-cc588bf56677" alt="DrawerV1" width="250" />
+</p>
 
 ---
 
