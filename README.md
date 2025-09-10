@@ -28,10 +28,7 @@ It is a prototype mobile application built with **React Native** and **Expo Rout
 ---
 
 ## 🧭 Navigation Flow  
-The application uses a **stack navigator** for the authentication flow (Login and Sign Up), while a **custom drawer navigator** manages access to the main screens (Profile, Settings, and Playlists).  
-Users start at the Login screen, can register via the Sign Up screen, and once authenticated, they gain access to the drawer-based main app.  
-The drawer features smooth **animated slide-in transitions** powered by `react-native-reanimated`.  
-For accessibility, intuitive labels, consistent iconography, and touch-friendly buttons ensure the app is easy to navigate for all users.  
+The application uses a **stack navigator** for the authentication flow (Login and Sign Up), while a **custom drawer navigator** manages access to the main screens (Profile, Settings, and Playlists). Users start at the Login screen, can register via the Sign Up screen, and once authenticated, they gain access to the drawer-based main app. The drawer features smooth **animated slide-in transitions** powered by `react-native-reanimated`. For accessibility, intuitive labels, consistent iconography, and touch-friendly buttons ensure the app is easy to navigate for all users.  
 
 ---
 
