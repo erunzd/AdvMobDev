@@ -7,6 +7,15 @@ It is a prototype mobile application built with **React Native** and **Expo Rout
 
 ## 📱 Screenshots  
 
+## First Activity
+
+<p align="center">
+  <img width="250" alt="beforeClick" src="https://github.com/user-attachments/assets/0c610a34-aa15-4cf8-98ff-8bdad339daca" />
+  <img width="250" alt="afterClick" src="https://github.com/user-attachments/assets/2fc9766d-6b89-4056-9108-4adc608ab02e" />
+</p>
+
+## Spotify Activity
+
 ### 🔑 Login / Sign Up  
 <p align="center">
   <img src="https://github.com/user-attachments/assets/f7fa34b3-fdc7-46e6-986f-d6ce3c146c01" alt="Login" width="250" />
