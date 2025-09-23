@@ -14,7 +14,7 @@ It is a prototype mobile application built with **React Native** and **Expo Rout
   <img width="250" alt="afterClick" src="https://github.com/user-attachments/assets/2fc9766d-6b89-4056-9108-4adc608ab02e" />
 </p>
 
-## Spotify Activity
+## Spotify Activity - Week 2
 
 ### 🔑 Login / Sign Up  
 <p align="center">
