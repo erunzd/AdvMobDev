@@ -3,11 +3,14 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import { useTheme } from '../../redux/theme';
 
-const colors = ["#E84E1D", "#1DB954", "#E91E63", "#3F51B5", "#FF9800"]; // fallback avatar bg colors
+const colors = ["#E84E1D", "#1DB954", "#E91E63", "#3F51B5", "#FF9800"];
 
 export default function ProfileScreen() {
   const navigation = useNavigation();
+  const theme = useTheme();
   const [profile, setProfile] = useState({
     username: "Guest",
     email: "",
@@ -15,7 +18,26 @@ export default function ProfileScreen() {
     avatarBg: colors[Math.floor(Math.random() * colors.length)],
   });
 
-  // Load profile from storage
+  const backgroundColor = useSharedValue(theme.backgroundColor);
+  const textColor = useSharedValue(theme.textColor);
+  const secondaryTextColor = useSharedValue(theme.secondaryTextColor);
+
+  useEffect(() => {
+    backgroundColor.value = withTiming(theme.backgroundColor, { duration: 300 });
+    textColor.value = withTiming(theme.textColor, { duration: 300 });
+    secondaryTextColor.value = withTiming(theme.secondaryTextColor, { duration: 300 });
+  }, [theme]);
+
+  const animatedContainerStyle = useAnimatedStyle(() => ({
+    backgroundColor: backgroundColor.value,
+  }));
+  const animatedTextStyle = useAnimatedStyle(() => ({
+    color: textColor.value,
+  }));
+  const animatedSecondaryTextStyle = useAnimatedStyle(() => ({
+    color: secondaryTextColor.value,
+  }));
+
   const loadProfile = async () => {
     try {
       const savedProfile = await AsyncStorage.getItem("userProfile");
@@ -34,7 +56,6 @@ export default function ProfileScreen() {
     }
   };
 
-  // Reload every time screen is focused
   useFocusEffect(
     React.useCallback(() => {
       loadProfile();
@@ -42,66 +63,59 @@ export default function ProfileScreen() {
   );
 
   return (
-    <View style={styles.container}>
-      {/* Header */}
+    <Animated.View style={[styles.container, animatedContainerStyle]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="white" />
+          <Ionicons name="arrow-back" size={24} color={theme.textColor} />
         </TouchableOpacity>
-        <Ionicons name="ellipsis-vertical" size={24} color="white" />
+        <Ionicons name="ellipsis-vertical" size={24} color={theme.textColor} />
       </View>
 
-      {/* Profile Avatar */}
       <View style={styles.avatarWrapper}>
         {profile.avatar ? (
           <Image source={{ uri: profile.avatar }} style={styles.avatar} />
         ) : (
           <View style={[styles.avatar, { backgroundColor: profile.avatarBg }]}>
-            <Text style={styles.avatarText}>
+            <Animated.Text style={[styles.avatarText, animatedTextStyle]}>
               {profile.username ? profile.username.charAt(0).toUpperCase() : "?"}
-            </Text>
+            </Animated.Text>
           </View>
         )}
       </View>
 
-      {/* Username and Email */}
-      <Text style={styles.username}>{profile.username}</Text>
-      <Text style={styles.email}>{profile.email}</Text>
+      <Animated.Text style={[styles.username, animatedTextStyle]}>{profile.username}</Animated.Text>
+      <Animated.Text style={[styles.email, animatedSecondaryTextStyle]}>{profile.email}</Animated.Text>
 
-      {/* Edit Profile Button */}
       <TouchableOpacity
-        style={styles.editButton}
+        style={[styles.editButton, { borderColor: theme.borderColor }]}
         onPress={() => navigation.navigate("EditProfile")}
       >
-        <Text style={styles.editButtonText}>EDIT PROFILE</Text>
+        <Animated.Text style={[styles.editButtonText, animatedTextStyle]}>EDIT PROFILE</Animated.Text>
       </TouchableOpacity>
 
-      {/* Stats Row */}
       <View style={styles.statsRow}>
         <View style={styles.statItem}>
-          <Text style={styles.statNumber}>0</Text>
-          <Text style={styles.statLabel}>PLAYLISTS</Text>
+          <Animated.Text style={[styles.statNumber, animatedTextStyle]}>0</Animated.Text>
+          <Animated.Text style={[styles.statLabel, animatedSecondaryTextStyle]}>PLAYLISTS</Animated.Text>
         </View>
         <View style={styles.statItem}>
-          <Text style={styles.statNumber}>0</Text>
-          <Text style={styles.statLabel}>FOLLOWERS</Text>
+          <Animated.Text style={[styles.statNumber, animatedTextStyle]}>0</Animated.Text>
+          <Animated.Text style={[styles.statLabel, animatedSecondaryTextStyle]}>FOLLOWERS</Animated.Text>
         </View>
         <View style={styles.statItem}>
-          <Text style={styles.statNumber}>31</Text>
-          <Text style={styles.statLabel}>FOLLOWING</Text>
+          <Animated.Text style={[styles.statNumber, animatedTextStyle]}>31</Animated.Text>
+          <Animated.Text style={[styles.statLabel, animatedSecondaryTextStyle]}>FOLLOWING</Animated.Text>
         </View>
       </View>
 
-      {/* Recent Activity Placeholder */}
-      <Text style={styles.activity}>No recent activity</Text>
-    </View>
+      <Animated.Text style={[styles.activity, animatedSecondaryTextStyle]}>No recent activity</Animated.Text>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#121212",
     alignItems: "center",
   },
   header: {
@@ -123,23 +137,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   avatarText: {
-    color: "#fff",
     fontSize: 48,
     fontWeight: "bold",
+    fontFamily: 'SpaceMono',
   },
   username: {
-    color: "#fff",
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 6,
+    fontFamily: 'SpaceMono',
   },
   email: {
-    color: "#aaa",
     fontSize: 14,
     marginBottom: 20,
+    fontFamily: 'SpaceMono',
   },
   editButton: {
-    borderColor: "#fff",
     borderWidth: 1,
     borderRadius: 20,
     paddingHorizontal: 20,
@@ -147,9 +160,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   editButtonText: {
-    color: "#fff",
     fontSize: 14,
     fontWeight: "600",
+    fontFamily: 'SpaceMono',
   },
   statsRow: {
     flexDirection: "row",
@@ -161,18 +174,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   statNumber: {
-    color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+    fontFamily: 'SpaceMono',
   },
   statLabel: {
-    color: "#aaa",
     fontSize: 12,
     marginTop: 2,
+    fontFamily: 'SpaceMono',
   },
   activity: {
-    color: "#aaa",
     fontSize: 14,
     marginTop: 10,
+    fontFamily: 'SpaceMono',
   },
 });
