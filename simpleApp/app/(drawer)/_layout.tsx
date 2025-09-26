@@ -1,39 +1,14 @@
 import React from "react";
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Ionicons } from "@expo/vector-icons";
 import Animated from "react-native-reanimated";
 import { useWindowDimensions } from "react-native";
-
+import CustomDrawerContent from "./CustomDrawerContent";
 import Profile from "./Profile";
 import Settings from "./Settings";
-import Playlists from "./Playlist";
+import Playlist from "./Playlist";
 
 const Drawer = createDrawerNavigator();
-
-function CustomDrawerContent(props: any) {
-  return (
-    <DrawerContentScrollView {...props} style={{ backgroundColor: "#121212" }}>
-      <DrawerItem
-        label="Profile"
-        labelStyle={{ color: "white" }}
-        icon={({ size }) => <Ionicons name="person-circle-outline" size={size} color="#1DB954" />}
-        onPress={() => props.navigation.navigate("Profile")}
-      />
-      <DrawerItem
-        label="Settings"
-        labelStyle={{ color: "white" }}
-        icon={({ size }) => <Ionicons name="settings-outline" size={size} color="#1DB954" />}
-        onPress={() => props.navigation.navigate("Settings")}
-      />
-      <DrawerItem
-        label="Playlists"
-        labelStyle={{ color: "white" }}
-        icon={({ size }) => <Ionicons name="musical-notes-outline" size={size} color="#1DB954" />}
-        onPress={() => props.navigation.navigate("Playlists")}
-      />
-    </DrawerContentScrollView>
-  );
-}
 
 export default function DrawerLayout() {
   const dimensions = useWindowDimensions();
@@ -42,6 +17,7 @@ export default function DrawerLayout() {
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
+          headerShown: false,
         headerStyle: { backgroundColor: "#121212" },
         headerTintColor: "#fff",
         drawerStyle: { backgroundColor: "#121212", width: 240 },
@@ -53,7 +29,7 @@ export default function DrawerLayout() {
     >
       <Drawer.Screen name="Profile" component={Profile} />
       <Drawer.Screen name="Settings" component={Settings} />
-      <Drawer.Screen name="Playlists" component={Playlists} />
+      <Drawer.Screen name="Playlist" component={Playlist} />
     </Drawer.Navigator>
   );
 }
