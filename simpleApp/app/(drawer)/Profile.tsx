@@ -139,18 +139,18 @@ const styles = StyleSheet.create({
   avatarText: {
     fontSize: 48,
     fontWeight: "bold",
-    fontFamily: 'SpaceMono',
+    fontFamily: 'SpotifyMix-Bold',
   },
   username: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 6,
-    fontFamily: 'SpaceMono',
+    fontFamily: 'SpotifyMix-Bold',
   },
   email: {
     fontSize: 14,
     marginBottom: 20,
-    fontFamily: 'SpaceMono',
+    fontFamily: 'SpotifyMix-Regular',
   },
   editButton: {
     borderWidth: 1,
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   editButtonText: {
     fontSize: 14,
     fontWeight: "600",
-    fontFamily: 'SpaceMono',
+    fontFamily: 'SpotifyMix-Regular',
   },
   statsRow: {
     flexDirection: "row",
@@ -176,16 +176,16 @@ const styles = StyleSheet.create({
   statNumber: {
     fontSize: 16,
     fontWeight: "bold",
-    fontFamily: 'SpaceMono',
+    fontFamily: 'SpotifyMix-Bold',
   },
   statLabel: {
     fontSize: 12,
     marginTop: 2,
-    fontFamily: 'SpaceMono',
+    fontFamily: 'SpotifyMix-Regular',
   },
   activity: {
     fontSize: 14,
     marginTop: 10,
-    fontFamily: 'SpaceMono',
+    fontFamily: 'SpotifyMix-Regular',
   },
 });

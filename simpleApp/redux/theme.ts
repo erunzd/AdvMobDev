@@ -38,7 +38,14 @@ export const themes: Record<'light' | 'dark' | 'custom', Theme> = {
 };
 
 export const useTheme = () => {
-  const { mode, accentColor } = useSelector((state: RootState) => state.theme);
-  const theme = { ...themes[mode], accentColor: mode === 'custom' ? accentColor : themes[mode].accentColor };
-  return theme;
+  const { mode, accentColor, backgroundColor } = useSelector((state: RootState) => state.theme);
+  const baseTheme = themes[mode];
+  if (mode === 'custom') {
+    return {
+      ...baseTheme,
+      backgroundColor: backgroundColor || baseTheme.backgroundColor,
+      accentColor: accentColor || baseTheme.accentColor,
+    };
+  }
+  return { ...baseTheme, accentColor: accentColor || baseTheme.accentColor };
 };
