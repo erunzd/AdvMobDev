@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './store';
 
 export interface Theme {
+  mode: 'light' | 'dark' | 'custom'; // Add mode to the Theme interface
   backgroundColor: string;
   textColor: string;
   secondaryTextColor: string;
@@ -10,7 +11,7 @@ export interface Theme {
   borderColor: string;
 }
 
-export const themes: Record<'light' | 'dark' | 'custom', Theme> = {
+export const themes: Record<'light' | 'dark' | 'custom', Omit<Theme, 'mode'>> = {
   light: {
     backgroundColor: '#FFFFFF',
     textColor: '#000000',
@@ -42,10 +43,15 @@ export const useTheme = () => {
   const baseTheme = themes[mode];
   if (mode === 'custom') {
     return {
+      mode, // Return mode
       ...baseTheme,
       backgroundColor: backgroundColor || baseTheme.backgroundColor,
       accentColor: accentColor || baseTheme.accentColor,
     };
   }
-  return { ...baseTheme, accentColor: accentColor || baseTheme.accentColor };
+  return {
+    mode, // Return mode
+    ...baseTheme,
+    accentColor: accentColor || baseTheme.accentColor,
+  };
 };

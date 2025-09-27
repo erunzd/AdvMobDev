@@ -59,7 +59,7 @@ export default function CustomDrawerContent(props: DrawerContentComponentProps) 
 
   const handleViewProfile = () => {
     props.navigation.closeDrawer();
-    props.navigation.navigate('Profile');
+    props.navigation.navigate('TabNavigator', { screen: 'Profile' });
   };
 
   const handleSettings = () => {

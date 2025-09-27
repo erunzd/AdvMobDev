@@ -82,7 +82,7 @@ export default function SettingsScreen() {
   };
 
   const handleViewProfile = () => {
-    navigation.navigate('Profile');
+    navigation.navigate('TabNavigator', { screen: 'Profile' });
   };
 
   const handleLogOut = () => {
