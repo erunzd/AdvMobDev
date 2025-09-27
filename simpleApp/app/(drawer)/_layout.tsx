@@ -51,7 +51,7 @@ function TabNavigator() {
             let iconName;
             if (route.name === "Home") iconName = "home-outline";
             else if (route.name === "Search") iconName = "search-outline";
-            else if (route.name === "Playlist") iconName = "musical-notes-outline";
+            else if (route.name === "Playlist") iconName = "albums-outline";
             else if (route.name === "Profile") iconName = "person-outline";
 
             return <Ionicons name={iconName} size={24} color={color} />;
@@ -69,8 +69,8 @@ function TabNavigator() {
 
 export default function DrawerLayout() {
   const dimensions = useWindowDimensions();
-  const theme = useTheme(); // Get theme for drawer
-  console.log("Drawer Theme:", theme); // Debug drawer theme
+  const theme = useTheme();
+  console.log("Drawer Theme:", theme);
 
   return (
     <Drawer.Navigator
