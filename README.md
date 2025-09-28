@@ -41,6 +41,16 @@ The application uses a **stack navigator** for the authentication flow (Login an
 
 ---
 
+## Week 4 - Activity 2: Spotify Profile Creation
+The profile module enforces input validation by requiring usernames to be at least three characters long and emails to conform to a regex-based format check prior to persisting data. UI responsiveness is enhanced through react-native-reanimated, where theme-driven color values are bound to shared values and animated via withTiming transitions for smooth updates. Profile data (username, email, avatar, and background) is serialized to AsyncStorage on save, and the ProfileScreen leverages useFocusEffect to rehydrate state whenever the screen is revisited. This guarantees that the profile preview remains consistent with the latest persisted user data without requiring a manual refresh.
+
+<p align="center">
+  <img width="250" alt="editProfile" src="https://github.com/user-attachments/assets/290c05d1-b73c-4a04-9835-e2c6a4f10317" />
+  <img width="250"alt="updatedProfile" src="https://github.com/user-attachments/assets/355608fa-f23b-430d-923a-61c800e3e946" />
+</p>
+
+---
+
 ## ⚙️ Tech Stack  
 - React Native  
 - Expo Router  
