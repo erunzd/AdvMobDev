@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from "react"; // Added useEffect to React import
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
@@ -9,6 +9,7 @@ import SettingsScreen from "./Settings";
 import PlaylistScreen from "./Playlist";
 import HomeScreen from "./Home";
 import SearchScreen from "./Search";
+import PlaylistDetail from "./PlaylistDetail";
 import { useTheme } from "../../redux/theme"; // Ensure this matches your Redux theme hook
 
 const Drawer = createDrawerNavigator();
@@ -44,7 +45,13 @@ function TabNavigator() {
           tabBarLabelStyle: {
             fontSize: 12,
             marginTop: 4,
-            color: navigation.isFocused() ? (theme.mode === "dark" ? "#FFFFFF" : "#000000") : (theme.mode === "dark" ? "#B3B3B3" : "#757575"),
+            color: navigation.isFocused()
+              ? theme.mode === "dark"
+                ? "#FFFFFF"
+                : "#000000"
+              : theme.mode === "dark"
+              ? "#B3B3B3"
+              : "#757575",
           },
           tabBarIcon: ({ focused, color }) => {
             console.log("Icon Color:", color, "Focused:", focused, "Theme Mode:", theme.mode); // Debug icon color
@@ -89,6 +96,7 @@ export default function DrawerLayout() {
     >
       <Drawer.Screen name="TabNavigator" component={TabNavigator} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
+      <Drawer.Screen name="PlaylistDetail" component={PlaylistDetail} options={{ headerShown: false }} />
     </Drawer.Navigator>
   );
 }

@@ -11,7 +11,14 @@ interface Playlist {
   id: string;
   name: string;
   createdBy: string;
+  cover: string;
 }
+
+const predefinedPlaylists: Playlist[] = [
+  { id: "1", name: "Liked Songs", createdBy: "You", cover: "https://misc.scdn.co/liked-songs/liked-songs-300.jpg" },
+  { id: "2", name: "rand", createdBy: "zai.cxg", cover: "https://i.scdn.co/image/ab67706c0000bebb0e0c2c6c5c0c2c6c5c0c2c6c" },
+  { id: "3", name: "ambot", createdBy: "Czai)", cover: "https://i.scdn.co/image/ab67706c0000bebb0e0c2c6c5c0c2c6c5c0c2c6c" },
+];
 
 export default function PlaylistScreen() {
   const navigation = useNavigation();
@@ -22,24 +29,29 @@ export default function PlaylistScreen() {
     avatar: null,
     avatarBg: theme.accentColor,
   });
-  const [activeTab, setActiveTab] = useState<"playlists" | "artists">(
-    "playlists"
-  );
+  const [activeTab, setActiveTab] = useState<"playlists" | "artists">("playlists");
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false); // Flag to prevent multiple loads
 
   const backgroundColor = useSharedValue(theme.backgroundColor);
   const textColor = useSharedValue(theme.textColor);
   const secondaryTextColor = useSharedValue(theme.secondaryTextColor);
 
   useEffect(() => {
+    // Update animations on theme change
     backgroundColor.value = withTiming(theme.backgroundColor, { duration: 300 });
     textColor.value = withTiming(theme.textColor, { duration: 300 });
-    secondaryTextColor.value = withTiming(theme.secondaryTextColor, {
-      duration: 300,
-    });
-    loadProfile();
-    loadPlaylists();
-  }, [theme]);
+    secondaryTextColor.value = withTiming(theme.secondaryTextColor, { duration: 300 });
+  }, [theme, backgroundColor, textColor, secondaryTextColor]);
+
+  useEffect(() => {
+    // Load data only once on mount
+    if (!isLoaded) {
+      loadProfile();
+      loadPlaylists();
+      setIsLoaded(true); // Set flag after initial load
+    }
+  }, [isLoaded]); // Empty dependency array for mount-only execution
 
   const animatedContainerStyle = useAnimatedStyle(() => ({
     backgroundColor: backgroundColor.value,
@@ -70,8 +82,15 @@ export default function PlaylistScreen() {
   const loadPlaylists = async () => {
     try {
       const savedPlaylists = await AsyncStorage.getItem("playlists");
+      console.log("Loaded playlists from storage:", savedPlaylists);
       if (savedPlaylists) {
-        setPlaylists(JSON.parse(savedPlaylists));
+        const parsedPlaylists = JSON.parse(savedPlaylists);
+        console.log("Parsed playlists:", parsedPlaylists);
+        setPlaylists(parsedPlaylists);
+      } else {
+        console.log("No saved playlists, initializing with predefined:", predefinedPlaylists);
+        setPlaylists(predefinedPlaylists);
+        await savePlaylists(predefinedPlaylists);
       }
     } catch (e) {
       console.log("Failed to load playlists:", e);
@@ -82,6 +101,7 @@ export default function PlaylistScreen() {
     try {
       await AsyncStorage.setItem("playlists", JSON.stringify(updatedPlaylists));
       setPlaylists(updatedPlaylists);
+      console.log("Playlists saved:", updatedPlaylists);
     } catch (e) {
       console.log("Failed to save playlists:", e);
     }
@@ -92,6 +112,7 @@ export default function PlaylistScreen() {
       id: Date.now().toString(),
       name: `New Playlist ${playlists.length + 1}`,
       createdBy: profile.username,
+      cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKRcM0IsJUkLyCuleVHR_WNv6swhCVLRHciA&s",
     };
     const updatedPlaylists = [newPlaylist, ...playlists];
     savePlaylists(updatedPlaylists);
@@ -104,9 +125,7 @@ export default function PlaylistScreen() {
         text: "Delete",
         style: "destructive",
         onPress: () => {
-          const updatedPlaylists = playlists.filter(
-            (playlist) => playlist.id !== id
-          );
+          const updatedPlaylists = playlists.filter((playlist) => playlist.id !== id);
           savePlaylists(updatedPlaylists);
         },
       },
@@ -123,14 +142,7 @@ export default function PlaylistScreen() {
         })
       }
     >
-      <View
-        style={[
-          styles.iconContainer,
-          { backgroundColor: theme.accentColor + "33" }, // accent tint
-        ]}
-      >
-        <Ionicons name="musical-notes" size={26} color={theme.textColor} />
-      </View>
+      <Image source={{ uri: item.cover }} style={styles.coverImage} />
       <View style={{ flex: 1 }}>
         <Animated.Text style={[styles.title, animatedTextStyle]}>
           {item.name}
@@ -140,16 +152,11 @@ export default function PlaylistScreen() {
         </Animated.Text>
       </View>
       <TouchableOpacity onPress={() => handleDeletePlaylist(item.id)}>
-        <Ionicons
-          name="ellipsis-vertical"
-          size={20}
-          color={theme.secondaryTextColor}
-        />
+        <Ionicons name="ellipsis-vertical" size={20} color={theme.secondaryTextColor} />
       </TouchableOpacity>
     </TouchableOpacity>
   );
 
-  // Avatar component
   const avatarComponent = profile.avatar ? (
     <Image source={{ uri: profile.avatar }} style={styles.avatar} />
   ) : (
@@ -162,36 +169,24 @@ export default function PlaylistScreen() {
 
   return (
     <Animated.View style={[styles.container, animatedContainerStyle]}>
-      {/* HEADER (kept as-is) */}
       <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-        >
+        <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
           {avatarComponent}
         </TouchableOpacity>
         <Animated.Text style={[styles.headerTitle, animatedTextStyle]}>
           Your Library
         </Animated.Text>
         <TouchableOpacity onPress={handleAddPlaylist}>
-          <Ionicons
-            name="add"
-            size={24}
-            color={theme.textColor}
-            style={styles.icon}
-          />
+          <Ionicons name="add" size={24} color={theme.textColor} style={styles.icon} />
         </TouchableOpacity>
       </View>
 
-      {/* TABS */}
       <View style={styles.tabContainer}>
         <TouchableOpacity
           onPress={() => setActiveTab("playlists")}
           style={[
             styles.tab,
-            {
-              backgroundColor:
-                activeTab === "playlists" ? theme.accentColor : theme.inputBackground,
-            },
+            { backgroundColor: activeTab === "playlists" ? theme.accentColor : theme.inputBackground },
           ]}
         >
           <Animated.Text
@@ -207,10 +202,7 @@ export default function PlaylistScreen() {
           onPress={() => setActiveTab("artists")}
           style={[
             styles.tab,
-            {
-              backgroundColor:
-                activeTab === "artists" ? theme.accentColor : theme.inputBackground,
-            },
+            { backgroundColor: activeTab === "artists" ? theme.accentColor : theme.inputBackground },
           ]}
         >
           <Animated.Text
@@ -224,33 +216,22 @@ export default function PlaylistScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* PLAYLISTS TAB */}
       {activeTab === "playlists" ? (
         <>
           {playlists.length === 0 ? (
             <ScrollView contentContainerStyle={styles.emptyStateContainer}>
-              <Ionicons
-                name="musical-notes-outline"
-                size={64}
-                color={theme.secondaryTextColor}
-              />
-              <Animated.Text
-                style={[styles.emptyTitle, animatedSecondaryTextStyle]}
-              >
+              <Ionicons name="musical-notes-outline" size={64} color={theme.secondaryTextColor} />
+              <Animated.Text style={[styles.emptyTitle, animatedSecondaryTextStyle]}>
                 Create a playlist
               </Animated.Text>
-              <Animated.Text
-                style={[styles.emptySubtitle, animatedSecondaryTextStyle]}
-              >
+              <Animated.Text style={[styles.emptySubtitle, animatedSecondaryTextStyle]}>
                 Make a new playlist to get started.
               </Animated.Text>
               <TouchableOpacity
                 style={[styles.createButton, { backgroundColor: theme.accentColor }]}
                 onPress={handleAddPlaylist}
               >
-                <Animated.Text
-                  style={[styles.createButtonText, { color: "#fff" }]}
-                >
+                <Animated.Text style={[styles.createButtonText, { color: "#fff" }]}>
                   Create playlist
                 </Animated.Text>
               </TouchableOpacity>
@@ -266,22 +247,14 @@ export default function PlaylistScreen() {
         </>
       ) : (
         <ScrollView contentContainerStyle={styles.emptyStateContainer}>
-          <Ionicons
-            name="person-outline"
-            size={64}
-            color={theme.secondaryTextColor}
-          />
+          <Ionicons name="person-outline" size={64} color={theme.secondaryTextColor} />
           <Animated.Text style={[styles.emptyTitle, animatedSecondaryTextStyle]}>
             Follow your first artist
           </Animated.Text>
-          <Animated.Text
-            style={[styles.emptySubtitle, animatedSecondaryTextStyle]}
-          >
+          <Animated.Text style={[styles.emptySubtitle, animatedSecondaryTextStyle]}>
             Find an artist you love and hit follow.
           </Animated.Text>
-          <TouchableOpacity
-            style={[styles.createButton, { backgroundColor: theme.accentColor }]}
-          >
+          <TouchableOpacity style={[styles.createButton, { backgroundColor: theme.accentColor }]}>
             <Animated.Text style={[styles.createButtonText, { color: "#fff" }]}>
               Find artists
             </Animated.Text>
@@ -363,6 +336,12 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     justifyContent: "center",
     alignItems: "center",
+    marginRight: 12,
+  },
+  coverImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 6,
     marginRight: 12,
   },
   title: { fontSize: 16, fontWeight: "bold" },
