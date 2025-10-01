@@ -51,6 +51,10 @@ The profile module enforces input validation by requiring usernames to be at lea
 
 ---
 
+## Week 5 - Activity 1: Theme Switcher
+
+---
+
 ## ⚙️ Tech Stack  
 - React Native  
 - Expo Router  
