@@ -41,6 +41,19 @@ The application uses a **stack navigator** for the authentication flow (Login an
 
 ---
 
+## Week 4 - Activity 1: Spotify Playlist Builder App
+The playlist and playlist detail screens use a combination of React hooks and persistent local storage for managing state. Playlist.tsx uses useState and AsyncStorage to handle playlist creation, deletion, and persistence, while PlaylistDetail.tsx uses a useReducer pattern to manage complex song list updates along with undo/redo functionality and state history tracking. Each playlist and its songs are saved individually using unique storage keys (playlist-{id}) to ensure data consistency between sessions.
+
+For testing, both components were validated through manual interaction in the emulator—creating, deleting, and reopening playlists to confirm persistence, and testing undo/redo actions to verify correct state rollback behavior. Basic UI validation was performed to ensure reactive updates, smooth animations, and consistent theme transitions.
+
+<p align="center">
+  <img width="250" alt="builder1" src="https://github.com/user-attachments/assets/d1013117-cdb3-4aab-a97c-002cb274ccd9" />
+  <img width="250" alt="builder2" src="https://github.com/user-attachments/assets/ee73d858-e844-440e-ba7b-e7273838824c" />
+  <img width="250" alt="builder3" src="https://github.com/user-attachments/assets/09c877b9-12b7-429d-ac94-84636aa9bc41" />
+</p>
+
+---
+
 ## Week 4 - Activity 2: Spotify Profile Creation
 The profile module enforces input validation by requiring usernames to be at least three characters long and emails to conform to a regex-based format check prior to persisting data. UI responsiveness is enhanced through react-native-reanimated, where theme-driven color values are bound to shared values and animated via withTiming transitions for smooth updates. Profile data (username, email, avatar, and background) is serialized to AsyncStorage on save, and the ProfileScreen leverages useFocusEffect to rehydrate state whenever the screen is revisited. This guarantees that the profile preview remains consistent with the latest persisted user data without requiring a manual refresh.
 
@@ -52,6 +65,16 @@ The profile module enforces input validation by requiring usernames to be at lea
 ---
 
 ## Week 5 - Activity 1: Theme Switcher
+The theme implementation in this app leverages a Redux-based useTheme hook to dynamically manage light and dark modes, ensuring a seamless user experience across different preferences. Colors for backgrounds, text, and accents are stored in a centralized theme object, which is updated with smooth animations using React Native Reanimated to transition between themes. This approach allows for consistent styling across components, with the theme adapting in real-time to user interactions or system settings. The implementation is extensible, making it easy to add new themes or customize existing ones as needed.
+
+<p align="center">
+  <img width="250" alt="light_playlist" src="https://github.com/user-attachments/assets/d2e900aa-d5a7-4399-b51b-25ae696a5d7c" />
+  <img width="250" alt="light_drawer" src="https://github.com/user-attachments/assets/6b51bfc0-5063-447d-baa3-9cb3590aafaf" />
+  <img width="250" alt="light_settings" src="https://github.com/user-attachments/assets/8d106906-d324-4d89-b63d-8ed83add252b" />
+  <img width="250" alt="dark_playlist" src="https://github.com/user-attachments/assets/426e391e-5b09-4fde-8d29-8c9577cdddab" />
+  <img width="250" alt="dark_drawer" src="https://github.com/user-attachments/assets/951f7eb0-e4b3-4ecc-912d-de075bd8e75f" />
+  <img width="250" alt="dark_settings" src="https://github.com/user-attachments/assets/96c984cd-4b1c-4637-91ac-60d56dd50a1f" />
+</p>
 
 ---
 
